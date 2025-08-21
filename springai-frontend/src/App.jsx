@@ -18,7 +18,15 @@ export default function App() {
     setIsLoading(true);
 
     try {
-      const { data } = await axios.get(`http://localhost:8080/${encodeURIComponent(input)}`);
+      const { data } = await axios.get(
+        `https://6fd38956b7e9.ngrok-free.app/${encodeURIComponent(input)}`,
+        {
+          headers: {
+            "ngrok-skip-browser-warning": "true"
+          }
+        }
+      );
+
       setMsgs(prev => [
         ...prev.slice(0, -1), // remove loading message
         { from: "ai", text: data }
@@ -47,7 +55,6 @@ export default function App() {
             {m.text}
           </div>
         ))}
-
       </div>
 
       <form className="input-form" onSubmit={sendMessage}>
